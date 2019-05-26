@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- <link rel="stylesheet" type="text/css" href="./index3232.css" /> -->
+        <!-- <link rel="stylesheet" type="text/css" href="./input3232.css" /> -->
+        <link rel="stylesheet" type="text/css" href="./produk.css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    </head>
+    <body>
+        <div class="navbar">
+
+        </div>
+        <div class="gambar-img">
+             <img src="./kaos22.jpg" class="gambar-product"/>
+             <div class="tulisann">Name  </div>
+             <input type="text" id="name"  /> <br/>*minimal harus memilik 5 huruf  <br/> <br/> <br/> <br/>
+             <div class="tulisann"> Email </div>
+             <input type="email" id="email"  /> <br/>*email harus gmail atau yahoo.com <br/> <br/> <br/> <br/>
+             <div class="tulisann">Tanggal Lahir  </div>
+             <input type="date" id="date"   /> <br/> *minimal Umur Anda Harus 17 Tahun <br/> <br/> <br/> <br/>
+             <div class="tulisann">Saldo Anda  </div> 
+             <input type="number" id="saldo" /> <br/> *masuk kan saldo anda <br/> <br/> <br/> <br/>
+             <button onclick="masuk()" class="button-beli" >Pesan</button>
+        </div>
+        <br/><br/><br/><br/>
+        <div id="masuk">
+
+        </div>
+        <script>
+            var emailChecked = (email) =>{
+                var kondisi = false
+                var temp = ''
+                for(var x= 0; x < email.length; x++){
+                    if(kondisi === false && email[x] === '@'){
+                        kondisi = true
+                    }
+                    else if(kondisi === true){
+                        temp+= email[x]
+                    }
+                }
+                return temp
+            }
+            var dateChecked = (date) =>{
+                var kondisi = false
+                var temp = ''
+                for(var x= 0; x < date.length; x++){
+                    if(date[x] === '-'){
+                        kondisi = true
+                        break
+                    }
+                    else if(kondisi === false){
+                        temp+= date[x] 
+                    }
+                }
+                var year = new Date;
+                var tahunSekarang = year.getFullYear()
+                // console.log(tahunSekarang)
+                var umur = tahunSekarang - Number(temp)
+                return umur
+                // return typeof(x)
+            }
+            var Rupiah = (num) =>{
+                var y = num.toString()
+                var temp = ''
+                var count = 0
+                for(var x = y.length -1; x >= 0; x--){
+                    if(count === 3){
+                        temp+= '.'
+                        count = 0
+                    }
+                    if(count !== 3){   
+                        count++
+                        temp+= y[x]
+                    }
+                }
+                var result = ''
+                for(var x = temp.length-1; x >= 0;x--){
+                    result+= temp[x]
+                }
+                return 'Rp. ' + result + ',00'
+            }
+            function masuk(){
+                var namaProduk = 'Kaos Abu-abu'
+                var hargaProduk = 1500000
+                var name = document.getElementById("name").value;
+                var email =  document.getElementById("email").value;
+                var email2 = emailChecked(email)
+                var date = document.getElementById("date").value;
+                var umur  = dateChecked(date)
+                var saldo = document.getElementById("saldo").value;
+                var kembalian = saldo - hargaProduk
+                if(name.length < 5){
+                    // dateChecked()
+                    alert('Minimal nama harus memiliki 5 huruf')
+                }
+                else if(email2 !== 'gmail.com' && email2 !== 'yahoo.com'){
+                    alert('Email harus gmail dan yahoo')
+                }
+                else if(umur < 17){
+                    alert('Minimal umur 17')
+                }
+                else if(saldo < hargaProduk){
+                    alert('uang Anda Kurang')
+                }
+                else {
+                    var tanggal = new Date;
+                    var n = tanggal.getDate()
+                    var b = tanggal.getMonth()
+                    var t = tanggal.getFullYear()
+                    var fullTanggal = `${n}-${b}-${t}`
+                    alert(`Tanggal : ${fullTanggal} \n\n ${namaProduk} : ${Rupiah(hargaProduk)} \n total Belanja : ${Rupiah(hargaProduk)} \n Tunai ${Rupiah(saldo)} \n Kembalian : ${Rupiah(kembalian)} \n Terima Kasih`)
+                }
+            }
+        </script>
+    </body>
+</html>
